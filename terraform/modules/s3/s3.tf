@@ -15,7 +15,3 @@ resource "aws_s3_bucket" "export_bucket" {
 }
 
 
-resource "aws_s3_bucket" "export_bucket" {
-  bucket = "export"  # S3 bucket name: export
-
-}

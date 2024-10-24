@@ -37,20 +37,23 @@ jobs:
 
       - name: Debug - AWS Credentials
         run: |
-          echo "AWS credentials configured for the role: ${{ secrets.AWS_DEV_ROLE_ARN }}"
+          echo "AWS credentials configured for the role: [REDACTED]"  # Don't log sensitive information
           echo "Using AWS region: ${{ secrets.AWS_REGION }}"
 
       - name: Terraform Init
         run: |
+          set -e  # Exit if any command fails
           echo "Initializing Terraform..."
           terraform init  # Initializes Terraform
 
       - name: Terraform Plan
         run: |
+          set -e  # Exit if any command fails
           echo "Creating Terraform execution plan..."
           terraform plan  # Creates an execution plan
 
       - name: Terraform Apply
         run: |
+          set -e  # Exit if any command fails
           echo "Applying Terraform changes..."
-          terraform apply -auto-approve  # Applies the planned change
+          terraform apply -auto-approve  # Applies the planned changes

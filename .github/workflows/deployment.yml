@@ -21,7 +21,7 @@ jobs:
       - name: Configure AWS credentials for Dev
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::aws:policy/AdministratorAccess  # Use the appropriate role ARN
+          role-to-assume: arn:aws:iam::826223691807:role/githubawsRole  # Use the appropriate role ARN
           aws-region: us-east-1  # Set your desired AWS region
 
       - name: Terraform Init

@@ -56,4 +56,4 @@ jobs:
         run: |
           set -e  # Exit if any command fails
           echo "Applying Terraform changes..."
-          terraform apply -auto-approve  # Applies the planned changes
+          terraform apply -auto-approve  # Applies the planned change

@@ -23,8 +23,8 @@ jobs:
       - name: Configure AWS credentials for Dev
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ secrets.AWS_DEV_ROLE_ARN }}  # Role ARN for Dev environment
-          aws-region: ${{ secrets.AWS_REGION }}  # Setting AWS region
+          role-to-assume: arn:aws:iam::aws:policy/AdministratorAccess  # Role ARN for Dev environment
+          aws-region: us-east-1  # Setting AWS region
 
       - name: Debug - Current branch
         run: |

@@ -53,4 +53,4 @@ jobs:
       - name: Terraform Apply
         run: |
           echo "Applying Terraform changes..."
-          terraform apply -auto-approve  # Applies the planned changes
+          terraform apply -auto-approve  # Applies the planned change

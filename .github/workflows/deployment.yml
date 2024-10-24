@@ -3,7 +3,7 @@ name: Terraform Deployment for Dev Environment
 on:
   push:
     branches:
-      - dev  # This workflow to push on dev branch
+      - dev-1  # This workflow runs on pushes to the dev-1 branch
 
 jobs:
   terraform:
@@ -21,14 +21,24 @@ jobs:
       - name: Configure AWS credentials for Dev
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ secrets.AWS_DEV_ROLE_ARN }}  # Role ARN for Dev environment
-          aws-region: ${{ secrets.AWS_REGION }}  # Setting AWS region
+          role-to-assume: arn:aws:iam::826223691807:role/githubawsRole  # Use the appropriate role ARN
+          aws-region: us-east-1  # Set your desired AWS region
+
+      - name: Verify AWS Credentials
+        run: |
+          aws sts get-caller-identity  # Check if credentials are properly assumed
 
       - name: Terraform Init
-        run: terraform init  # Initializes Terraform
+        run: |
+          set -e  # Exit if any command fails
+          terraform init  # Initializes Terraform
 
       - name: Terraform Plan
-        run: terraform plan  # Creates an execution plan
+        run: |
+          set -e  # Exit if any command fails
+          terraform plan  # Creates an execution plan
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve  # Applies the planned changes
+        run: |
+          set -e  # Exit if any command fails
+          terraform apply -auto-approve  # Applies the planned changes

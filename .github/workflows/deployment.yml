@@ -3,7 +3,7 @@ name: Terraform Deployment for Dev Environment
 on:
   push:
     branches:
-      - dev  # This workflow to push on dev branch
+      - dev-1  # This workflow to push on dev branch
 
 jobs:
   terraform:

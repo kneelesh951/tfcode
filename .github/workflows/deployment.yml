@@ -21,8 +21,8 @@ jobs:
       - name: Configure AWS credentials for Dev
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ secrets.AWS_DEV_ROLE_ARN }}  # Role ARN for Dev environment
-          aws-region: ${{ secrets.AWS_REGION }}  # Setting AWS region
+          role-to-assume: arn:aws:iam::826223691807:user/migration_terraform_user  # Role ARN for Dev environment
+          aws-region: eu-central-1  # Setting AWS region
 
       - name: Terraform Init
         run: terraform init  # Initializes Terraform

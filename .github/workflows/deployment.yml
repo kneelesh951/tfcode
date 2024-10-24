@@ -3,7 +3,7 @@ name: Terraform Deployment for Dev Environment
 on:
   push:
     branches:
-      - dev-1  # This workflow to push on dev branch
+      - dev-1  # This workflow runs on pushes to the dev-1 branch
 
 jobs:
   terraform:
@@ -12,23 +12,40 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          # This is to debug if the code is checked out correctly
+          fetch-depth: 0 # This will fetch all history for all branches and tags
+        run: |
+          echo "Checked out the code from the repository"
+          echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: v1.9.8  
+        run: |
+          echo "Terraform version set to: v1.9.8"
 
       - name: Configure AWS credentials for Dev
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.AWS_DEV_ROLE_ARN }}  # Role ARN for Dev environment
           aws-region: ${{ secrets.AWS_REGION }}  # Setting AWS region
+        run: |
+          echo "AWS credentials configured for the role: ${{ secrets.AWS_DEV_ROLE_ARN }}"
+          echo "Using AWS region: ${{ secrets.AWS_REGION }}"
 
       - name: Terraform Init
-        run: terraform init  # Initializes Terraform
+        run: |
+          echo "Initializing Terraform..."
+          terraform init  # Initializes Terraform
 
       - name: Terraform Plan
-        run: terraform plan  # Creates an execution plan
+        run: |
+          echo "Creating Terraform execution plan..."
+          terraform plan  # Creates an execution plan
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve  # Applies the planned changes
+        run: |
+          echo "Applying Terraform changes..."
+          terraform apply -auto-approve  # Applies the planned changes

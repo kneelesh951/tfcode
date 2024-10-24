@@ -3,7 +3,7 @@ name: Terraform Deployment for Dev Environment
 on:
   push:
     branches:
-      - dev-1  # This workflow runs on pushes to the dev-1 branch
+      - main  # This workflow runs on pushes to the main branch
 
 jobs:
   terraform:
@@ -24,6 +24,7 @@ jobs:
           role-to-assume: arn:aws:iam::826223691807:role/githubawsRole  # Use the appropriate role ARN
           aws-region: us-east-1  # Set your desired AWS region
 
+          
       - name: Verify AWS Credentials
         run: |
           aws sts get-caller-identity  # Check if credentials are properly assumed

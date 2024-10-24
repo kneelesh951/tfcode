@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 # This will fetch all history for all branches and tags
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
@@ -23,37 +21,20 @@ jobs:
       - name: Configure AWS credentials for Dev
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::aws:policy/AdministratorAccess  # Role ARN for Dev environment
-          aws-region: us-east-1  # Setting AWS region
-
-      - name: Debug - Current branch
-        run: |
-          echo "Checked out the code from the repository"
-          echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
-
-      - name: Debug - Terraform Version
-        run: |
-          echo "Terraform version set to: v1.9.8"
-
-      - name: Debug - AWS Credentials
-        run: |
-          echo "AWS credentials configured for the role: [REDACTED]"  # Don't log sensitive information
-          echo "Using AWS region: ${{ secrets.AWS_REGION }}"
+          role-to-assume: arn:aws:iam::aws:policy/AdministratorAccess  # Use the appropriate role ARN
+          aws-region: us-east-1  # Set your desired AWS region
 
       - name: Terraform Init
         run: |
           set -e  # Exit if any command fails
-          echo "Initializing Terraform..."
           terraform init  # Initializes Terraform
 
       - name: Terraform Plan
         run: |
           set -e  # Exit if any command fails
-          echo "Creating Terraform execution plan..."
           terraform plan  # Creates an execution plan
 
       - name: Terraform Apply
         run: |
           set -e  # Exit if any command fails
-          echo "Applying Terraform changes..."
-          terraform apply -auto-approve  # Applies the planned change
+          terraform apply -auto-approve  # Applies the planned changes
